@@ -55,8 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Board.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
+     <Compile Include="Assets\Scripts\Board.cs" />
      <Compile Include="Assets\Scripts\GamePiece.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/naif/Game/Match Three/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
