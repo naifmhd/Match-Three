@@ -136,7 +136,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                if (m_allGamePieces[i, j]==null)
+                if (m_allGamePieces[i, j]==null && m_allTiles[i, j].tileType != TileType.Obstacle)
                 {
                     GamePiece piece = FillRandomAt(i, j,falseYOffset,moveTime);
                     iterations = 0;
@@ -502,7 +502,7 @@ public class Board : MonoBehaviour
         List<GamePiece> movingPieces = new List<GamePiece>();
         for(int i = 0; i < height-1; i++)
         {
-            if (m_allGamePieces[column, i] == null)
+            if (m_allGamePieces[column, i] == null && m_allTiles[column,i].tileType != TileType.Obstacle)
             {
                 for (int j = i+1; j < height; j++)
                 {
