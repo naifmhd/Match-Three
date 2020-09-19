@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MatchValue
+{
+    Yellow, Blue, Indigo, Magenta, Green, Cyan, Red, Teal, Wild
+}
+
 public class GamePiece : MonoBehaviour
 {
     public int xIndex;
@@ -20,10 +25,6 @@ public class GamePiece : MonoBehaviour
         Linear,EaseOut,EaseIn,SmoothStep,SmootherStep
     }
 
-    public enum MatchValue
-    {
-        Yellow, Blue, Indigo, Magenta, Green,Cyan,Red,Teal,Wild
-    }
     // Start is called before the first frame update
     void Start()
     {
