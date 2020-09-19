@@ -24,14 +24,18 @@ public class Board : MonoBehaviour
 
     bool m_playerInputEnabled = true;
 
-    public StartingTile[] startingTiles;
+    public StartingObject[] startingTiles;
+    public StartingObject[] startingGamePieces;
 
     ParticleManager m_particleManager;
-        
+
+    public int fillYOffset = 10;
+    public float fillMoveTime = 0.5f;
+
     [System.Serializable]
-    public class StartingTile
+    public class StartingObject
     {
-        public GameObject tilePrefab;
+        public GameObject prefab;
         public int x;
         public int y;
         public int z;
@@ -43,8 +47,9 @@ public class Board : MonoBehaviour
         m_allGamePieces = new GamePiece[width, height];
 
         SetupTiles();
+        SetupGamePieces();
         setupCamera();
-        FillBoard(10,0.5f);
+        FillBoard(fillYOffset, fillMoveTime);
 
         m_particleManager = GameObject.FindWithTag("ParticleManager").GetComponent<ParticleManager>() ;
         //ClearPieceAt(1, 2);
@@ -56,11 +61,11 @@ public class Board : MonoBehaviour
 
     void SetupTiles()
     {
-        foreach (StartingTile sTile in startingTiles)
+        foreach (StartingObject sTile in startingTiles)
         {
             if(sTile != null)
             {
-                MakeTile(sTile.tilePrefab, sTile.x, sTile.y, sTile.z);
+                MakeTile(sTile.prefab, sTile.x, sTile.y, sTile.z);
             }
         }
         for (int i = 0; i < width; i++)
@@ -75,9 +80,21 @@ public class Board : MonoBehaviour
         }
     }
 
+    void SetupGamePieces ()
+    {
+        foreach (StartingObject sPiece in startingGamePieces)
+        {
+            if (sPiece != null)
+            {
+                GameObject piece = Instantiate(sPiece.prefab, new Vector3(sPiece.x, sPiece.y, 0), Quaternion.identity) as GameObject;
+                MakeGamepiece(piece, sPiece.x, sPiece.y,fillYOffset,fillMoveTime);
+            }
+        }
+    }
+
     void MakeTile(GameObject prefab, int x, int y,int z = 0)
     {
-        if (prefab != null)
+        if (prefab != null && IsWithinBounds(x, y))
         {
             GameObject tile = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity) as GameObject;
             tile.name = "Title (" + x + "," + y + ")";
@@ -85,6 +102,22 @@ public class Board : MonoBehaviour
             tile.transform.parent = transform;
 
             m_allTiles[x, y].Init(x, y, this);
+        }
+    }
+
+    void MakeGamepiece(GameObject prefab, int x, int y, int falseYOffset = 0, float moveTime = 0.1f)
+    {
+        if (prefab != null && IsWithinBounds(x,y))
+        {
+            prefab.GetComponent<GamePiece>().Init(this);
+            PlaceGamePiece(prefab.GetComponent<GamePiece>(), x, y);
+
+            if (falseYOffset != 0)
+            {
+                prefab.transform.position = new Vector3(x, y + falseYOffset, 0);
+                prefab.GetComponent<GamePiece>().Move(x, y, moveTime);
+            }
+            prefab.transform.parent = transform;
         }
     }
 
@@ -165,21 +198,13 @@ public class Board : MonoBehaviour
 
     GamePiece FillRandomAt(int x, int y,int falseYOffset=0, float moveTime=0.1f)
     {
-        GameObject randomPiece = Instantiate(GetRandomGamePiece(), Vector3.zero, Quaternion.identity) as GameObject;
-        if (randomPiece != null)
+        if (IsWithinBounds(x, y))
         {
-            randomPiece.GetComponent<GamePiece>().Init(this);
-            PlaceGamePiece(randomPiece.GetComponent<GamePiece>(), x, y);
-
-            if (falseYOffset != 0)
-            {
-                randomPiece.transform.position = new Vector3(x, y + falseYOffset, 0);
-                randomPiece.GetComponent<GamePiece>().Move(x,y,moveTime);
-            }
-
-            randomPiece.transform.parent = transform;
+            GameObject randomPiece = Instantiate(GetRandomGamePiece(), Vector3.zero, Quaternion.identity) as GameObject;
+            MakeGamepiece(randomPiece, x, y, falseYOffset, moveTime);
             return randomPiece.GetComponent<GamePiece>();
         }
+        
         return null;
     }
 
@@ -615,7 +640,7 @@ public class Board : MonoBehaviour
 
     IEnumerator RefillRoutine()
     {
-        FillBoard(10,0.5f);
+        FillBoard(fillYOffset,fillMoveTime);
         yield return null;
     }
 
