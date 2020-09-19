@@ -5004,4 +5004,4 @@ MonoBehaviour:
   yIndex: 0
   interpolation: 4
   matchValue: 1
-  bombType: 2
+  bombType: 1

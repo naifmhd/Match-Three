@@ -308,6 +308,16 @@ public class Board : MonoBehaviour
                 Vector2 swipeDirection = new Vector2(targetTile.xIndex-clickedTile.xIndex, targetTile.yIndex-clickedTile.yIndex);
                 m_clickedTileBomb = DropBomb(clickedTile.xIndex, clickedTile.yIndex, swipeDirection, clickedPiecesMatches);
                 m_targetTileBomb = DropBomb(targetTile.xIndex, targetTile.yIndex, swipeDirection, targetPiecesMatches);
+                if(m_clickedTileBomb!=null && targetPiece != null)
+                {
+                    GamePiece clickedBombPiece = m_clickedTileBomb.GetComponent<GamePiece>();
+                    clickedBombPiece.ChangeColor(targetPiece);
+                }
+                if (m_targetTileBomb != null && clickedPiece != null)
+                {
+                    GamePiece targetBombPiece = m_clickedTileBomb.GetComponent<GamePiece>();
+                    targetBombPiece.ChangeColor(clickedPiece);
+                }
                 ClearAndRefillBoard(clickedPiecesMatches.Union(targetPiecesMatches).ToList());
 
                 //ClearPieceAt(clickedPiecesMatches);
