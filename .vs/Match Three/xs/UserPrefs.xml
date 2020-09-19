@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ParticleManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Bomb.cs">
     <Files>
       <File FileName="Assets/Scripts/Tile.cs" Line="69" Column="38" />
-      <File FileName="Assets/Scripts/GamePiece.cs" />
-      <File FileName="Assets/Scripts/Board.cs" Line="416" Column="10" />
+      <File FileName="Assets/Scripts/GamePiece.cs" Line="19" Column="6" />
+      <File FileName="Assets/Scripts/Board.cs" Line="50" Column="27" />
       <File FileName="Assets/Scripts/ParticlePlayer.cs" Line="25" Column="6" />
-      <File FileName="Assets/Scripts/ParticleManager.cs" Line="7" Column="5" />
+      <File FileName="Assets/Scripts/ParticleManager.cs" Line="30" Column="1" />
+      <File FileName="Assets/Scripts/Bomb.cs" Line="15" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +15,7 @@
             <Node name="Assembly-CSharp" expanded="True">
               <Node name="Assets" expanded="True">
                 <Node name="Scripts" expanded="True">
-                  <Node name="ParticleManager.cs" selected="True" />
+                  <Node name="Bomb.cs" selected="True" />
                 </Node>
               </Node>
             </Node>
