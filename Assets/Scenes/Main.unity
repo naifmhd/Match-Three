@@ -372,6 +372,12 @@ MonoBehaviour:
   rowBombPrefab: {fileID: 7527365602023477290, guid: c624ebdbc2b8d47b385a3437dc162cd3, type: 3}
   adjacentBombPrefab: {fileID: 8729220995856748646, guid: 01b40c523a3a54f3fabf5765fa628f06, type: 3}
   colorBombPrefab: {fileID: 5196501186858340825, guid: fe78204a0d2f948ba9a04802e3106fb7, type: 3}
+  maxCollectibles: 3
+  collectibleCount: 0
+  chanceForCollectible: 0.581
+  collectiblePrefabs:
+  - {fileID: 7674589844348562273, guid: 8aa84287b16ea40e6b14d0f5f61eff2e, type: 3}
+  - {fileID: 6165345499666457979, guid: 2df58a78f73a14042b1e2ebb52c3e3ef, type: 3}
   swapTime: 0.5
   startingTiles:
   - prefab: {fileID: 4749660123468669720, guid: 2aad707492db446fe83aebd94b234861, type: 3}

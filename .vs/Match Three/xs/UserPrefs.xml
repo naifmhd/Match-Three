@@ -6,8 +6,8 @@
       <File FileName="Assets/Scripts/ParticlePlayer.cs" />
       <File FileName="Assets/Scripts/ParticleManager.cs" />
       <File FileName="Assets/Scripts/Bomb.cs" Line="17" Column="1" />
-      <File FileName="Assets/Scripts/Collectible.cs" Line="18" Column="7" />
-      <File FileName="Assets/Scripts/Board.cs" Line="998" Column="1" />
+      <File FileName="Assets/Scripts/Collectible.cs" Line="7" Column="17" />
+      <File FileName="Assets/Scripts/Board.cs" Line="782" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

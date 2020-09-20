@@ -15,7 +15,7 @@ public class Collectible : GamePiece
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         
     }
 }
