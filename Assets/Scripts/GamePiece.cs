@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum MatchValue
 {
-    Yellow, Blue, Indigo, Magenta, Green, Cyan, Red, Teal, Wild
+    Yellow, Blue, Indigo, Magenta, Green, Cyan, Red, Teal, Wild, None
 }
 
 public class GamePiece : MonoBehaviour

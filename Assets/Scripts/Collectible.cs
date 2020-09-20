@@ -2,23 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BombType
+public class Collectible : GamePiece
 {
-    None,
-    Column,
-    Row,
-    Adjacent,
-    Color
-}
-
-public class Bomb : GamePiece
-{
-    public BombType bombType;
+    public bool clearedByBomb = false;
+    public bool clearedByBottom = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        matchValue = MatchValue.None;
     }
 
     // Update is called once per frame

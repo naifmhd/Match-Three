@@ -19,6 +19,12 @@ public class Board : MonoBehaviour
     public GameObject adjacentBombPrefab;
     public GameObject colorBombPrefab;
 
+    public int maxCollectibles = 3;
+    public int collectibleCount = 0;
+    [Range(0,1)]
+    public float chanceForCollectible = 0.1f;
+    public GameObject[] collectiblePrefabs;
+
     GameObject m_clickedTileBomb;
     GameObject m_targetTileBomb;
 
@@ -56,6 +62,10 @@ public class Board : MonoBehaviour
 
         SetupTiles();
         SetupGamePieces();
+
+        List<GamePiece> startingCollectibles = FindAllCollectibles();
+        collectibleCount = startingCollectibles.Count;
+
         setupCamera();
         FillBoard(fillYOffset, fillMoveTime);
 
@@ -153,16 +163,26 @@ public class Board : MonoBehaviour
         Camera.main.orthographicSize = (verticalSize > horizontalSize) ? verticalSize : horizontalSize;
     }
 
-    GameObject GetRandomGamePiece()
+    GameObject GetRandomObject(GameObject[] objectArray)
     {
-        int randomIdx = Random.Range(0, gamePiecePrefabs.Length);
+        int randomIdx = Random.Range(0, objectArray.Length);
 
-        if (gamePiecePrefabs[randomIdx] == null)
+        if (objectArray[randomIdx] == null)
         {
-            Debug.LogWarning("BOARD: " + randomIdx + " does not contain valid GamePiece prefab!");
+            Debug.LogWarning("BOARD: " + randomIdx + " does not contain valid GameObject prefab!");
         }
 
-        return gamePiecePrefabs[randomIdx];
+        return objectArray[randomIdx];
+    }
+
+    GameObject GetRandomGamePiece()
+    {
+        return GetRandomObject(gamePiecePrefabs);
+    }
+
+    GameObject GetRandomCollectible()
+    {
+        return GetRandomObject(collectiblePrefabs);
     }
 
     public void PlaceGamePiece(GamePiece gamePiece, int x, int y)
@@ -197,19 +217,28 @@ public class Board : MonoBehaviour
             {
                 if (m_allGamePieces[i, j]==null && m_allTiles[i, j].tileType != TileType.Obstacle)
                 {
-                    GamePiece piece = FillRandomAt(i, j,falseYOffset,moveTime);
-                    iterations = 0;
-
-                    while (HasMatchOnFill(i, j))
+                    GamePiece piece = null;
+                    if(j==height-1 && CanAddCollectible())
                     {
-                        Debug.Log("Loop:"+ i+","+ j);
-                        ClearPieceAt(i, j);
-                        piece = FillRandomAt(i, j);
-                        iterations++;
-                        if (iterations >= maxIterations)
+                        piece = FillRandomCollectibleAt(i, j, falseYOffset, moveTime);
+                        collectibleCount++;
+                    }
+                    else
+                    {
+                        piece = FillRandomGamePieceAt(i, j, falseYOffset, moveTime);
+                        iterations = 0;
+
+                        while (HasMatchOnFill(i, j))
                         {
-                            Debug.Log("Break:");
-                            break;
+                            Debug.Log("Loop:" + i + "," + j);
+                            ClearPieceAt(i, j);
+                            piece = FillRandomGamePieceAt(i, j);
+                            iterations++;
+                            if (iterations >= maxIterations)
+                            {
+                                Debug.Log("Break:");
+                                break;
+                            }
                         }
                     }
 
@@ -218,7 +247,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    GamePiece FillRandomAt(int x, int y,int falseYOffset=0, float moveTime=0.1f)
+    GamePiece FillRandomGamePieceAt(int x, int y,int falseYOffset=0, float moveTime=0.1f)
     {
         if (IsWithinBounds(x, y))
         {
@@ -227,6 +256,18 @@ public class Board : MonoBehaviour
             return randomPiece.GetComponent<GamePiece>();
         }
         
+        return null;
+    }
+
+    GamePiece FillRandomCollectibleAt(int x, int y, int falseYOffset = 0, float moveTime = 0.1f)
+    {
+        if (IsWithinBounds(x, y))
+        {
+            GameObject randomPiece = Instantiate(GetRandomCollectible(), Vector3.zero, Quaternion.identity) as GameObject;
+            MakeGamepiece(randomPiece, x, y, falseYOffset, moveTime);
+            return randomPiece.GetComponent<GamePiece>();
+        }
+
         return null;
     }
 
@@ -414,7 +455,7 @@ public class Board : MonoBehaviour
                 break;
             }
 
-            if(nextPiece.matchValue==startPiece.matchValue && !matches.Contains(nextPiece))
+            if(nextPiece.matchValue==startPiece.matchValue && !matches.Contains(nextPiece) && nextPiece.matchValue!=MatchValue.None)
             {
                 matches.Add(nextPiece);
             }
@@ -734,6 +775,10 @@ public class Board : MonoBehaviour
             bombedPieces = GetBombedPieces(gamePieces);
             gamePieces = gamePieces.Union(bombedPieces).ToList();
 
+            List<GamePiece> collectedPieces = FindCollectiblesAt(0);
+            collectibleCount -= collectedPieces.Count;
+            gamePieces = gamePieces.Union(collectedPieces).ToList();
+
             ClearPieceAt(gamePieces, bombedPieces);
             BreakTileAt(gamePieces);
 
@@ -760,6 +805,9 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
 
             matches = FindMatchesAt(movingPieces);
+
+            collectedPieces = FindCollectiblesAt(0);
+            matches = matches.Union(collectedPieces).ToList();
 
             if (matches.Count == 0)
             {
@@ -867,6 +915,7 @@ public class Board : MonoBehaviour
                             break;
                     }
                     allPiecesToClear = allPiecesToClear.Union(piecesToClear).ToList();
+                    allPiecesToClear = RemoveCollectibles(allPiecesToClear);
                 }
             }
        }
@@ -988,4 +1037,59 @@ public class Board : MonoBehaviour
         }
         return false;
     }
+
+    List<GamePiece> FindCollectiblesAt(int row)
+    {
+        List<GamePiece> foundCollectibles = new List<GamePiece>();
+
+        for(int i = 0; i < width; i++)
+        {
+            if (m_allGamePieces[i, row] != null)
+            {
+                Collectible collectibleComponent = m_allGamePieces[i, row].GetComponent<Collectible>();
+                if (collectibleComponent != null)
+                {
+                    foundCollectibles.Add(m_allGamePieces[i, row] );
+                }
+            }
+        }
+        return foundCollectibles;
+    }
+
+    List<GamePiece> FindAllCollectibles()
+    {
+        List<GamePiece> foundCollectibles = new List<GamePiece>();
+
+        for (int i = 0; i < height; i++)
+        {
+            List<GamePiece> collectibleRow = FindCollectiblesAt(i);
+            foundCollectibles = foundCollectibles.Union(collectibleRow).ToList();
+        }
+        return foundCollectibles;
+    }
+
+    bool CanAddCollectible()
+    {
+        return (Random.Range(0f, 1f) <= chanceForCollectible && collectiblePrefabs.Length>0 && collectibleCount<maxCollectibles);
+    }
+
+    List<GamePiece> RemoveCollectibles(List<GamePiece> gamePieces)
+    {
+        List<GamePiece> collectiblePieces = FindAllCollectibles();
+        List<GamePiece> piecesToRemove = new List<GamePiece>();
+
+        foreach(GamePiece piece in collectiblePieces)
+        {
+            Collectible collectibleComponent = piece.GetComponent<Collectible>();
+            if (collectibleComponent != null)
+            {
+                if (!collectibleComponent.clearedByBomb)
+                {
+                    piecesToRemove.Add(piece);
+                }
+            }
+        }
+        return gamePieces.Except(piecesToRemove).ToList();
+    }
+
 }
