@@ -775,8 +775,13 @@ public class Board : MonoBehaviour
             bombedPieces = GetBombedPieces(gamePieces);
             gamePieces = gamePieces.Union(bombedPieces).ToList();
 
-            List<GamePiece> collectedPieces = FindCollectiblesAt(0);
+            List<GamePiece> collectedPieces = FindCollectiblesAt(0,true);
+            List<GamePiece> allCollectibles = FindAllCollectibles();
+            List<GamePiece> blockers = gamePieces.Intersect(allCollectibles).ToList();
+            collectedPieces = collectedPieces.Union(blockers).ToList();
+
             collectibleCount -= collectedPieces.Count;
+
             gamePieces = gamePieces.Union(collectedPieces).ToList();
 
             ClearPieceAt(gamePieces, bombedPieces);
@@ -797,7 +802,7 @@ public class Board : MonoBehaviour
 
             movingPieces = CollapseColumn(gamePieces);
 
-            while (!IsCollapsed(movingPieces))
+            while (!IsCollapsed(movingPieces)) 
             {
                 yield return null;
             }
@@ -806,7 +811,7 @@ public class Board : MonoBehaviour
 
             matches = FindMatchesAt(movingPieces);
 
-            collectedPieces = FindCollectiblesAt(0);
+            collectedPieces = FindCollectiblesAt(0,true);
             matches = matches.Union(collectedPieces).ToList();
 
             if (matches.Count == 0)
@@ -1038,7 +1043,7 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    List<GamePiece> FindCollectiblesAt(int row)
+    List<GamePiece> FindCollectiblesAt(int row,bool clearedBottomOnly=false)
     {
         List<GamePiece> foundCollectibles = new List<GamePiece>();
 
@@ -1049,7 +1054,10 @@ public class Board : MonoBehaviour
                 Collectible collectibleComponent = m_allGamePieces[i, row].GetComponent<Collectible>();
                 if (collectibleComponent != null)
                 {
-                    foundCollectibles.Add(m_allGamePieces[i, row] );
+                    if (!clearedBottomOnly || (clearedBottomOnly &&collectibleComponent.clearedByBottom))
+                    {
+                        foundCollectibles.Add(m_allGamePieces[i, row]);
+                    }
                 }
             }
         }
