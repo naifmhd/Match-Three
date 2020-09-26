@@ -99,5 +99,6 @@ MonoBehaviour:
   yIndex: 0
   interpolation: 4
   matchValue: 9
+  scoreValue: 200
   clearedByBomb: 0
-  clearedByBottom: 1
+  clearedAtBottom: 1

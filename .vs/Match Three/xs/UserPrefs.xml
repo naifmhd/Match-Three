@@ -1,13 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Board.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ScoreManager.cs">
     <Files>
       <File FileName="Assets/Scripts/Tile.cs" Line="69" Column="38" />
-      <File FileName="Assets/Scripts/GamePiece.cs" Line="7" Column="70" />
+      <File FileName="Assets/Scripts/GamePiece.cs" />
       <File FileName="Assets/Scripts/ParticlePlayer.cs" />
       <File FileName="Assets/Scripts/ParticleManager.cs" />
-      <File FileName="Assets/Scripts/Bomb.cs" Line="17" Column="1" />
-      <File FileName="Assets/Scripts/Collectible.cs" Line="7" Column="17" />
-      <File FileName="Assets/Scripts/Board.cs" Line="782" Column="1" />
+      <File FileName="Assets/Scripts/Bomb.cs" />
+      <File FileName="Assets/Scripts/Collectible.cs" />
+      <File FileName="Assets/Scripts/Board.cs" Line="14" Column="42" />
+      <File FileName="Assets/Scripts/Singleton.cs" Line="22" Column="14" />
+      <File FileName="Assets/Scripts/ScoreManager.cs" Line="5" Column="52" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,7 +18,7 @@
             <Node name="Assembly-CSharp" expanded="True">
               <Node name="Assets" expanded="True">
                 <Node name="Scripts" expanded="True">
-                  <Node name="Board.cs" selected="True" />
+                  <Node name="ScoreManager.cs" selected="True" />
                 </Node>
               </Node>
             </Node>

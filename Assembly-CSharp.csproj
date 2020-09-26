@@ -57,11 +57,13 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\Board.cs" />
-     <Compile Include="Assets\Scripts\GamePiece.cs" />
-     <Compile Include="Assets\Scripts\ParticlePlayer.cs" />
-     <Compile Include="Assets\Scripts\ParticleManager.cs" />
      <Compile Include="Assets\Scripts\Bomb.cs" />
+     <Compile Include="Assets\Scripts\ParticleManager.cs" />
+     <Compile Include="Assets\Scripts\ParticlePlayer.cs" />
+     <Compile Include="Assets\Scripts\GamePiece.cs" />
      <Compile Include="Assets\Scripts\Collectible.cs" />
+     <Compile Include="Assets\Scripts\Singleton.cs" />
+     <Compile Include="Assets\Scripts\ScoreManager.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/naif/Game/Match Three/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

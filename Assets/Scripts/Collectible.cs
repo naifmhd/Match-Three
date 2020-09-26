@@ -1,21 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class Collectible : GamePiece
 {
-    public bool clearedByBomb = false;
-    public bool clearedByBottom = false;
+	public bool clearedByBomb = false;
+	public bool clearedAtBottom = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        matchValue = MatchValue.None;
-    }
 
-    // Update is called once per frame
-    void Update()
-    { 
-        
-    }
+	// Use this for initialization
+	void Start()
+	{
+		matchValue = MatchValue.None;
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+
+	}
 }
