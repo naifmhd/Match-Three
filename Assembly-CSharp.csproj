@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\Singleton.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\ScreenFader.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/naif/Game/Match Three/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
