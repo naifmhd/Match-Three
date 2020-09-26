@@ -1,12 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MessageWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GamePiece.cs">
     <Files>
-      <File FileName="Assets/Scripts/ScoreManager.cs" Line="16" Column="40" />
+      <File FileName="Assets/Scripts/ScoreManager.cs" Line="15" Column="6" />
       <File FileName="Assets/Scripts/ScreenFader.cs" />
-      <File FileName="Assets/Scripts/GameManager.cs" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="125" Column="26" />
       <File FileName="Assets/Scripts/Board.cs" />
-      <File FileName="Assets/Scripts/RectXformMover.cs" Line="9" Column="37" />
-      <File FileName="Assets/Scripts/MessageWindow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/RectXformMover.cs" />
+      <File FileName="Assets/Scripts/MessageWindow.cs" />
+      <File FileName="Assets/Scripts/SoundManager.cs" Line="24" Column="21" />
+      <File FileName="Assets/Scripts/GamePiece.cs" Line="29" Column="12" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +17,7 @@
             <Node name="Assembly-CSharp" expanded="True">
               <Node name="Assets" expanded="True">
                 <Node name="Scripts" expanded="True">
-                  <Node name="MessageWindow.cs" selected="True" />
+                  <Node name="GamePiece.cs" selected="True" />
                 </Node>
               </Node>
             </Node>

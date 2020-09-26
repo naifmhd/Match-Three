@@ -102,6 +102,7 @@ MonoBehaviour:
   interpolation: 4
   matchValue: 6
   scoreValue: 160
+  clearSound: {fileID: 8300000, guid: 56e813bd88354448fb9f0a52536449a1, type: 3}
   bombType: 3
 --- !u!1 &5748490680518439439
 GameObject:
